@@ -1,0 +1,24 @@
+{
+    "name": "jdk99/biblioteca",
+    "description": "Sistema de gerenciamento de empréstimos de biblioteca em PHP OOP",
+    "type": "project",
+    
+    "require": {
+        "php": ">=8.2"
+    },
+
+    "require-dev": {
+        "phpunit/phpunit": "^11.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "Jdk99\\Biblioteca\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "DevJhoow",
+            "email": "jdk99.rodrigues@gmail.com"
+        }
+    ]
+}
