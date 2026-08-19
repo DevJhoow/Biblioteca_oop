@@ -1,23 +1,24 @@
 <?php
+
 declare(strict_types=1);
-// tipagem estrita, fica rigoroso a tipagem do algoritimo
+// tipagem estrita, fica rigoroso a tipagem do algoritmo
 
 namespace Biblioteca;
 
 class Livro
 {
-    private $disponivel = true;
+    private bool $disponivel = true;
 
     public function __construct(
         private readonly string $isbn,
         private readonly string $titulo,
         private readonly string $autor,
     ) {
-        if(trim($isbn) === '') {
-            throw new \InvalidArgumentException('ISBN não pode ser vazio');
+        if (trim($isbn) === '') {
+            throw new \InvalidArgumentException('ISBN não pode ser vazio.');
         }
-        if(trim($titulo) === '') {
-            throw new \InvalidArgumentException('Titulo não pode ser vazio');
+        if (trim($titulo) === '') {
+            throw new \InvalidArgumentException('Título não pode ser vazio.');
         }
     }
 
@@ -31,24 +32,24 @@ class Livro
         return $this->titulo;
     }
 
-    public function getAutor(): string 
+    public function getAutor(): string
     {
-        return this->autor;
+        return $this->autor;
     }
 
-    // funcao disponivel ou indisponivel
-    public function isDisponivel(): bool 
+    // Verifica se o livro está disponível para empréstimo
+    public function isDisponivel(): bool
     {
-        return this->disponivel; 
+        return $this->disponivel;
     }
 
-    public function marcarComoEmprestado(): void 
+    public function marcarComoEmprestado(): void
     {
-        $this->disponivel = false; 
+        $this->disponivel = false;
     }
 
-    public function marcarComoDisponivel(): void 
+    public function marcarComoDisponivel(): void
     {
-        $this->disponivel = true; 
+        $this->disponivel = true;
     }
 }

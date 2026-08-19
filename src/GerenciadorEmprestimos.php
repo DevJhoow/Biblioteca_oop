@@ -2,25 +2,25 @@
 
 declare(strict_types=1);
 
-namespace Biblioteca ;
+namespace Biblioteca;
 
 use Biblioteca\Exception\LivroIndisponivelException;
 use Biblioteca\Exception\LimiteEmprestimosExcedidoException;
 
-class GerenceiadorEmprestimo
+class GerenciadorEmprestimos
 {
     private array $emprestimos = [];
 
     public function realizarEmprestimo(Livro $livro, Usuario $usuario, \DateTimeImmutable $dataRetirada): Emprestimo
     {
-        if(!$livro->idDisponivel()) {
+        if (!$livro->isDisponivel()) {
             throw new LivroIndisponivelException($livro->getIsbn());
         }
 
-        $ativoDoUsuario = $this->cpntarEmprestimosAtivos($usuario);
+        $ativoDoUsuario = $this->contarEmprestimosAtivos($usuario);
 
-        if($ativoDoUsuario >= Usuario::getLimiteEmprestimo()) {
-            throw new LimiteEmprestimoException(
+        if ($ativoDoUsuario >= Usuario::getLimiteEmprestimos()) {
+            throw new LimiteEmprestimosExcedidoException(
                 $usuario->getNome(),
                 Usuario::getLimiteEmprestimos()
             );
@@ -30,29 +30,28 @@ class GerenceiadorEmprestimo
         $livro->marcarComoEmprestado();
         $this->emprestimos[] = $emprestimo;
 
-        return $emprestimos;
+        return $emprestimo;
     }
 
     public function devolverLivro(Emprestimo $emprestimo, \DateTimeImmutable $dataDevolucao): void
     {
-          $emprestimo->registrarDevolucao($dataDevolucao);
+        $emprestimo->registrarDevolucao($dataDevolucao);
     }
 
     public function listarEmprestimosAtivos(): array
     {
-         return array_values(array_filter(
-                $this->emprestimos,
-                fn (Emprestimo $e) => $e->getStatus() === EmprestimoStatus::ATIVO
-         ));
-    }
-
-    private function contarEmprestimosAtivos(Usuario $usuario): int 
-    {
-        return count(array_filter(
+        return array_values(array_filter(
             $this->emprestimos,
-            fn (Emprestimo $e) => $e->getUsuario() === $usuario 
-            && $e->getStatus() === EmprestimoStatus::ATIVO
+            fn (Emprestimo $e) => $e->getStatus() === EmprestimoStatus::ATIVO
         ));
     }
 
+    private function contarEmprestimosAtivos(Usuario $usuario): int
+    {
+        return count(array_filter(
+            $this->emprestimos,
+            fn (Emprestimo $e) => $e->getUsuario() === $usuario
+                && $e->getStatus() === EmprestimoStatus::ATIVO
+        ));
+    }
 }
