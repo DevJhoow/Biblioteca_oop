@@ -1,52 +1,49 @@
 # 📚 Sistema de Biblioteca — Gerenciamento de Empréstimos
 
-Sistema de gerenciamento de empréstimos de livros, desenvolvido em **PHP puro com Programação Orientada a Objetos**, sem uso de frameworks — construído como estudo aprofundado de arquitetura de software, princípios SOLID e boas práticas de mercado.
+Sistema de gerenciamento de empréstimos de livros, em **PHP puro com Programação Orientada a Objetos**, sem framework — projeto de estudo focado em arquitetura de software, princípios SOLID e boas práticas de mercado.
 
 🔗 **[Ver demonstração ao vivo](#)** *(link após o deploy)*
 
-## 🎯 Objetivo do projeto
+## 🎯 Objetivo
 
-Este projeto foi construído com foco em **fundamentos**, não em produtividade com framework. A ideia é demonstrar domínio de:
-
-- Modelagem de domínio orientada a objetos
-- Separação de responsabilidades (SRP)
-- Tratamento de erros com exceções de domínio
-- Testes automatizados como parte do processo, não como extra
-- Autoload via Composer (PSR-4)
+Demonstrar domínio de modelagem orientada a objetos, separação de responsabilidades (SOLID), tratamento de erros com exceções de domínio e testes automatizados — sem depender de um framework fazer isso "por baixo dos panos".
 
 ## 🛠️ Tecnologias
 
-- PHP 8.2+
-- Composer (gerenciamento de dependências e autoload PSR-4)
-- PHPUnit (testes automatizados)
+PHP 8.2+ · Composer (PSR-4) · PHPUnit
 
-## 📐 Decisões de arquitetura
+## 📐 Principais decisões de arquitetura
 
 | Decisão | Motivo |
 |---|---|
-| `Emprestimo` como entidade própria, não um campo em `Livro` | Evita que `Livro` acumule responsabilidade sobre regras de empréstimo (violaria SRP) |
-| `GerenciadorEmprestimos` como camada de orquestração | Regras que dependem de múltiplas entidades (limite por usuário, disponibilidade) não pertencem a uma entidade isolada |
-| Exceções de domínio (`LivroIndisponivelException`, `LimiteEmprestimosExcedidoException`) | Permite tratamento específico por tipo de erro, em vez de `Exception` genérica |
-| `readonly` em propriedades imutáveis | Garante que dados como ISBN não sejam alterados após criação do objeto |
-| `DateTimeImmutable` em vez de `DateTime` | Evita mutação acidental de datas compartilhadas entre objetos |
+| `Emprestimo` é entidade própria, não campo em `Livro` | Evita que `Livro` acumule responsabilidade sobre regras de empréstimo |
+| `GerenciadorEmprestimos` orquestra as regras | Regras que envolvem múltiplas entidades não pertencem a uma isolada |
+| Exceções de domínio próprias | Permite tratamento específico por tipo de erro |
+| `readonly` + `DateTimeImmutable` | Evita mutação acidental de dados que não deveriam mudar |
 
-## ✅ Regras de negócio implementadas
+## ✅ Regras de negócio
 
-- Um livro só pode ser emprestado se estiver disponível
-- Cada usuário tem um limite máximo de 3 empréstimos ativos simultâneos
-- A devolução de um livro o torna disponível novamente para novo empréstimo
-- Prazo de devolução calculado automaticamente (14 dias após retirada)
+- Livro só é emprestado se estiver disponível
+- Usuário tem limite de 3 empréstimos ativos simultâneos
+- Devolução libera o livro para novo empréstimo
+- Prazo de devolução: 14 dias após retirada
+
+## 🧠 Sobre a demonstração visual (`public/index.php`)
+
+- **`src/`** é o núcleo do sistema — classes de domínio, regras de negócio, arquitetura.
+- **`tests/`** valida essas regras de forma automatizada.
+- **`public/index.php`** é só uma **vitrine**: consome as classes de `src/` para mostrar alguns cenários no navegador. Não contém lógica de negócio.
+
+Em resumo: `src/` é o motor, `public/index.php` é o painel mostrando o motor funcionando.
 
 ## 🧪 Testes
-
-O projeto conta com testes unitários cobrindo as regras de negócio principais:
 
 ```bash
 composer install
 php vendor/bin/phpunit
 ```
 
-## 🚀 Como rodar localmente
+## 🚀 Rodar localmente
 
 ```bash
 git clone https://github.com/seu-usuario/biblioteca-oop.git
@@ -55,6 +52,6 @@ composer install
 php -S localhost:8000 -t public
 ```
 
-Depois acesse `http://localhost:8000`.
+Acesse `http://localhost:8000`.
 
-## 📂 Estrutura do projeto
+## 📂 Estrutura
