@@ -83,10 +83,10 @@ $totalAtivos = count($gerenciador->listarEmprestimosAtivos());
     </style>
 </head>
 <body>
-    <h1>📚 Sistema de Biblioteca — Demonstração</h1>
+    <h1>📚 Sistema de Biblioteca — Demonstração </h1>
     <p>Simulação executada em <?= (new DateTimeImmutable())->format('d/m/Y H:i') ?></p>
 
-    <?php foreach ($eventos as $evento): ?>
+    <?php foreach ($eventos as $evento) : ?>
         <div class="evento <?= $evento['tipo'] ?>">
             <?= htmlspecialchars($evento['mensagem']) ?>
         </div>
