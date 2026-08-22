@@ -1,5 +1,7 @@
 # 📚 Sistema de Biblioteca — Gerenciamento de Empréstimos
 
+![Testes](https://github.com/DevJhoow/biblioteca-oop/actions/workflows/tests.yml/badge.svg)
+
 Sistema de gerenciamento de empréstimos de livros, em **PHP puro com Programação Orientada a Objetos**, sem framework — projeto de estudo focado em arquitetura de software, princípios SOLID e boas práticas de mercado.
 
 🔗 **[Ver demonstração ao vivo](#)** *(link após o deploy)*
